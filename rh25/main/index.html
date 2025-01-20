@@ -1,4 +1,9 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="shortcut icon" href="../images/favicon.ico"/><title>Babylon.js Playground</title><style>html,
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="shortcut icon" href="../images/favicon.ico"/><title>Babylon.js Playground</title><style>@font-face {
+                font-family: Poppins;
+                src: url("../fonts/Poppins/Poppins-Regular.ttf");
+            }
+
+            html,
             body {
                 width: 100%;
                 height: 100%;
@@ -18,6 +23,17 @@
                 -webkit-tap-highlight-color: rgba(255, 255, 255, 0); /* mobile webkit */
             }
 
+            #RH_Logo {
+                position: absolute;
+                top: 32px;
+                left: 32px;
+                width: 250px;
+                height: 200px;
+                background: url("../images/reality-hack-logo.png") no-repeat center center;
+                background-size: cover;
+                z-index: 2;
+            }
+
             #Loading {
                 position: absolute;
                 left: 0;
@@ -29,7 +45,10 @@
                 justify-content: center;
                 align-content: center;
                 text-align: center;
-                background-color: black;
+                /*
+                background: url("../images/reality-hack-background.png") no-repeat center center;
+                background-size: cover;
+                */
                 color: lightgrey;
                 font-family: Arial, Helvetica, sans-serif;
                 font-size: 32pt;
@@ -43,9 +62,32 @@
                 background: rgba(0, 0, 0, 0);
             }
 
-            #renderCanvas {
+            #url-area {
                 position: relative;
+                top: 0;
+                width: 1100px;
+                height: 175px;
+                margin: auto;
+                padding-top: 25px;
+                text-align: center;
+                font-family: Poppins;
+                font-size: 50px;
+                font-weight: bold;
+                background-color: rgba(0, 0, 0, 0.75);
+                z-index: 2;
+                color: rgb(236, 58, 135);
+            }
+
+            #url {
+                color: rgb(251, 212, 25);
+            }
+
+            #renderCanvas {
+                position: absolute;
                 display: block;
+                top: 0;
+                left: 0;
                 width: 100%;
                 height: 100%;
-            }</style></head><body><div id="Loading">Loading ...</div><div id="canvasZone"><canvas id="renderCanvas" class="disable-selection"></canvas></div><script src="../js/main.js"></script></body></html>
+                z-index: 0;
+            }</style></head><body><div id="RH_Logo"></div><div id="Loading">Loading ...</div><div id="canvasZone"><div id="url-area">Play along in your headset<br/><div id="url">https://druuw.id</div></div><canvas id="renderCanvas" class="disable-selection"></canvas></div><script src="../js/main.js"></script></body></html>
