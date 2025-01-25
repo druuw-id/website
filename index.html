@@ -1,11 +1,13 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="shortcut icon" href="images/favicon.ico"/><title>Babylon.js Playground</title><style>@font-face {
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="shortcut icon" href="images/favicon.ico"/><title>druuw.id</title><style>@font-face {
                 font-family: Poppins;
                 src: url("./fonts/Poppins/Poppins-Regular.ttf");
             }
 
             * {
+                -webkit-touch-callout: none; /* prevent callout to copy image, etc when tap to hold */
+                -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
+                -webkit-user-select: none; /* prevent copy paste, to allow, change 'none' to 'text' */
                 user-select: none;
-                -webkit-user-select: none;
             }
 
             html,
@@ -29,48 +31,114 @@
             }
 
             #RH_Logo {
+                display: block;
                 position: absolute;
-                top: 32px;
-                left: 32px;
-                width: 250px;
-                height: 200px;
+                box-sizing: border-box;
+                top: 0;
+                left: 0;
+                width: 10%;
+                padding: 10%;
+                margin-left: 1%;
+                z-index: 2;
+            }
+
+            #RH_Logo .content {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
                 background: url("./images/reality-hack-logo.png") no-repeat center center;
-                background-size: cover;
+                background-size: contain;
                 z-index: 2;
             }
 
             #Druuwid_Logo {
+                display: block;
                 position: absolute;
-                top: 42px;
-                right: 42px;
-                width: 160px;
-                height: 160px;
+                box-sizing: border-box;
+                top: 0;
+                right: 0;
+                margin: 1%;
+                width: 8%;
+                padding: 8%;
+                z-index: 2;
+            }
+
+            #Druuwid_Logo .content {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
                 border-style: solid;
                 border-width: 5px;
                 /* border-color: rgb(251, 212, 25); */
+                /* border-color: rgb(77, 58, 139); */
                 border-color: rgb(236, 58, 135);
                 border-radius: 50%;
-                background: url("./images/druuw.id-logo--yellow-text.png") no-repeat center center;
+                background: url("./images/druuw.id-logo.png") no-repeat center center;
                 background-size: cover;
                 z-index: 2;
             }
 
-            #Loading {
+            #overlay {
                 position: absolute;
-                left: 0;
                 top: 0;
+                left: 0;
                 width: 100%;
                 height: 100%;
+                background-color: rgba(0, 0, 0, 0.75);
+                z-index: 1;
+            }
+
+            #center-column {
+                position: absolute;
+                top: 0%;
+                bottom: 0;
+                width: 100%;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                align-content: center;
+                align-items: center;
+                z-index: 2;
+            }
+
+            #text-area {
+                position: relative;
+                width: 100%;
+                height: 30%;
+            }
+
+            #text-area-text {
+                width: 100%;
+                height: 100%;
                 text-align: center;
-                background-color: black;
-                color: lightgrey;
-                font-family: Arial, Helvetica, sans-serif;
-                font-size: 32pt;
+                font-family: Poppins;
+                font-size: 90%;
                 font-weight: bold;
+                /* background-color: rgba(0, 0, 0, 0.75); */
+                z-index: 2;
+                /* color: rgb(236, 58, 135); */
+                color: rgb(251, 212, 25);
+            }
+
+            #start-button {
+                display: none;
+                position: relative;
+                width: 200px;
+                height: 100px;
+                line-height: 100px;
+                background: red;
+                border-style: solid;
+                border-width: 1px;
+                border-radius: 20px;
+                background-color: rgb(0, 255, 0);
+                text-align: center;
+                font-family: Poppins;
+                font-size: 40px;
+                cursor: pointer;
+                z-index: 6;
             }
 
             #canvasZone {
@@ -78,30 +146,8 @@
                 width: 100%;
                 height: 100%;
                 background: rgba(0, 0, 0, 0);
+                cursor: pointer;
             }
-            #text-area {
-                position: relative;
-                top: 0;
-                width: 1100px;
-                height: 100px;
-                margin: auto;
-                padding-top: 25px;
-                text-align: center;
-                font-family: Poppins;
-                font-size: 30px;
-                font-weight: bold;
-                /* background-color: rgba(0, 0, 0, 0.75); */
-                z-index: 2;
-                color: rgb(236, 58, 135);
-            }
-
-            /* #url .goto {
-                color: rgb(77, 58, 139);
-            }
-
-            #url {
-                color: rgb(251, 212, 25);
-            } */
 
             #renderCanvas {
                 position: absolute;
@@ -111,43 +157,14 @@
                 height: 100%;
             }
 
+            #babylonjsLoadingDiv {
+                z-index: 20;
+            }
+
             .xr-button-overlay {
-                position: absolute !important;
-                margin: auto;
-                top: 150px;
-                left: 50%;
-                bottom: unset !important;
-                right: unset !important;
-                width: 250px;
-                height: 180px;
-                -webkit-transform: translateX(-125px);
-                -ms-transform: translateX(-125px);
-                transform: translateX(-125px);
-            }
-
-            .babylonVRicon:before {
-                content: "Go deep!";
-                font-family: Poppins;
-                font-size: 20px;
-                color: rgb(200, 180, 20);
-            }
-
-            .babylonVRicon {
-                margin: auto !important;
-                padding: 0 !important;
-                width: 100% !important;
-                height: 100% !important;
-
-                /* yellow */
-                /* background-image: url(data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%222048%22%20height%3D%221152%22%20viewBox%3D%220%200%202048%201152%22%20version%3D%221.1%22%3E%3Cpath%20transform%3D%22rotate%28180%201024%2C576.0000000000001%29%22%20d%3D%22m1109%2C896q17%2C0%2030%2C-12t13%2C-30t-12.5%2C-30.5t-30.5%2C-12.5l-170%2C0q-18%2C0%20-30.5%2C12.5t-12.5%2C30.5t13%2C30t30%2C12l170%2C0zm-85%2C256q59%2C0%20132.5%2C-1.5t154.5%2C-5.5t164.5%2C-11.5t163%2C-20t150%2C-30t124.5%2C-41.5q23%2C-11%2042%2C-24t38%2C-30q27%2C-25%2041%2C-61.5t14%2C-72.5l0%2C-257q0%2C-123%20-47%2C-232t-128%2C-190t-190%2C-128t-232%2C-47l-81%2C0q-37%2C0%20-68.5%2C14t-60.5%2C34.5t-55.5%2C45t-53%2C45t-53%2C34.5t-55.5%2C14t-55.5%2C-14t-53%2C-34.5t-53%2C-45t-55.5%2C-45t-60.5%2C-34.5t-68.5%2C-14l-81%2C0q-123%2C0%20-232%2C47t-190%2C128t-128%2C190t-47%2C232l0%2C257q0%2C68%2038%2C115t97%2C73q54%2C24%20124.5%2C41.5t150%2C30t163%2C20t164.5%2C11.5t154.5%2C5.5t132.5%2C1.5zm939%2C-298q0%2C39%20-24.5%2C67t-58.5%2C42q-54%2C23%20-122%2C39.5t-143.5%2C28t-155.5%2C19t-157%2C11t-148.5%2C5t-129.5%2C1.5q-59%2C0%20-130%2C-1.5t-148%2C-5t-157%2C-11t-155.5%2C-19t-143.5%2C-28t-122%2C-39.5q-34%2C-14%20-58.5%2C-42t-24.5%2C-67l0%2C-257q0%2C-106%2040.5%2C-199t110%2C-162.5t162.5%2C-109.5t199%2C-40l81%2C0q27%2C0%2052%2C14t50%2C34.5t51%2C44.5t55.5%2C44.5t63.5%2C34.5t74%2C14t74%2C-14t63.5%2C-34.5t55.5%2C-44.5t51%2C-44.5t50%2C-34.5t52%2C-14l14%2C0q37%2C0%2070%2C0.5t64.5%2C4.5t63.5%2C12t68%2C23q71%2C30%20128.5%2C78.5t98.5%2C110t63.5%2C133.5t22.5%2C149l0%2C257z%22%20fill%3D%22%23fbd419%22%20/%3E%3C/svg%3E%0A) !important; */
-
-                /* pink */
-                /* background-image: url(data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%222048%22%20height%3D%221152%22%20viewBox%3D%220%200%202048%201152%22%20version%3D%221.1%22%3E%3Cpath%20transform%3D%22rotate%28180%201024%2C576.0000000000001%29%22%20d%3D%22m1109%2C896q17%2C0%2030%2C-12t13%2C-30t-12.5%2C-30.5t-30.5%2C-12.5l-170%2C0q-18%2C0%20-30.5%2C12.5t-12.5%2C30.5t13%2C30t30%2C12l170%2C0zm-85%2C256q59%2C0%20132.5%2C-1.5t154.5%2C-5.5t164.5%2C-11.5t163%2C-20t150%2C-30t124.5%2C-41.5q23%2C-11%2042%2C-24t38%2C-30q27%2C-25%2041%2C-61.5t14%2C-72.5l0%2C-257q0%2C-123%20-47%2C-232t-128%2C-190t-190%2C-128t-232%2C-47l-81%2C0q-37%2C0%20-68.5%2C14t-60.5%2C34.5t-55.5%2C45t-53%2C45t-53%2C34.5t-55.5%2C14t-55.5%2C-14t-53%2C-34.5t-53%2C-45t-55.5%2C-45t-60.5%2C-34.5t-68.5%2C-14l-81%2C0q-123%2C0%20-232%2C47t-190%2C128t-128%2C190t-47%2C232l0%2C257q0%2C68%2038%2C115t97%2C73q54%2C24%20124.5%2C41.5t150%2C30t163%2C20t164.5%2C11.5t154.5%2C5.5t132.5%2C1.5zm939%2C-298q0%2C39%20-24.5%2C67t-58.5%2C42q-54%2C23%20-122%2C39.5t-143.5%2C28t-155.5%2C19t-157%2C11t-148.5%2C5t-129.5%2C1.5q-59%2C0%20-130%2C-1.5t-148%2C-5t-157%2C-11t-155.5%2C-19t-143.5%2C-28t-122%2C-39.5q-34%2C-14%20-58.5%2C-42t-24.5%2C-67l0%2C-257q0%2C-106%2040.5%2C-199t110%2C-162.5t162.5%2C-109.5t199%2C-40l81%2C0q27%2C0%2052%2C14t50%2C34.5t51%2C44.5t55.5%2C44.5t63.5%2C34.5t74%2C14t74%2C-14t63.5%2C-34.5t55.5%2C-44.5t51%2C-44.5t50%2C-34.5t52%2C-14l14%2C0q37%2C0%2070%2C0.5t64.5%2C4.5t63.5%2C12t68%2C23q71%2C30%20128.5%2C78.5t98.5%2C110t63.5%2C133.5t22.5%2C149l0%2C257z%22%20fill%3D%22%23ec3a87%22%20/%3E%3C/svg%3E%0A) !important; */
-
-                /* purple */
-                background-image: url(data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%222048%22%20height%3D%221152%22%20viewBox%3D%220%200%202048%201152%22%20version%3D%221.1%22%3E%3Cpath%20transform%3D%22rotate%28180%201024%2C576.0000000000001%29%22%20d%3D%22m1109%2C896q17%2C0%2030%2C-12t13%2C-30t-12.5%2C-30.5t-30.5%2C-12.5l-170%2C0q-18%2C0%20-30.5%2C12.5t-12.5%2C30.5t13%2C30t30%2C12l170%2C0zm-85%2C256q59%2C0%20132.5%2C-1.5t154.5%2C-5.5t164.5%2C-11.5t163%2C-20t150%2C-30t124.5%2C-41.5q23%2C-11%2042%2C-24t38%2C-30q27%2C-25%2041%2C-61.5t14%2C-72.5l0%2C-257q0%2C-123%20-47%2C-232t-128%2C-190t-190%2C-128t-232%2C-47l-81%2C0q-37%2C0%20-68.5%2C14t-60.5%2C34.5t-55.5%2C45t-53%2C45t-53%2C34.5t-55.5%2C14t-55.5%2C-14t-53%2C-34.5t-53%2C-45t-55.5%2C-45t-60.5%2C-34.5t-68.5%2C-14l-81%2C0q-123%2C0%20-232%2C47t-190%2C128t-128%2C190t-47%2C232l0%2C257q0%2C68%2038%2C115t97%2C73q54%2C24%20124.5%2C41.5t150%2C30t163%2C20t164.5%2C11.5t154.5%2C5.5t132.5%2C1.5zm939%2C-298q0%2C39%20-24.5%2C67t-58.5%2C42q-54%2C23%20-122%2C39.5t-143.5%2C28t-155.5%2C19t-157%2C11t-148.5%2C5t-129.5%2C1.5q-59%2C0%20-130%2C-1.5t-148%2C-5t-157%2C-11t-155.5%2C-19t-143.5%2C-28t-122%2C-39.5q-34%2C-14%20-58.5%2C-42t-24.5%2C-67l0%2C-257q0%2C-106%2040.5%2C-199t110%2C-162.5t162.5%2C-109.5t199%2C-40l81%2C0q27%2C0%2052%2C14t50%2C34.5t51%2C44.5t55.5%2C44.5t63.5%2C34.5t74%2C14t74%2C-14t63.5%2C-34.5t55.5%2C-44.5t51%2C-44.5t50%2C-34.5t52%2C-14l14%2C0q37%2C0%2070%2C0.5t64.5%2C4.5t63.5%2C12t68%2C23q71%2C30%20128.5%2C78.5t98.5%2C110t63.5%2C133.5t22.5%2C149l0%2C257z%22%20fill%3D%22%234d3a8b%22%20/%3E%3C/svg%3E%0A) !important; */
-            }</style><script type="module">console.debug("Csound importing ...");
-            // See "https://unpkg.com/@doc.e.dub/csound-browser@6.17.0-beta5/dist/csound.esm.js";
-            import { Csound } from "./js/csound.esm.js";
-            document.Csound = Csound;
-            console.debug("Csound importing - done");</script></head><body><div id="RH_Logo"></div><div id="Loading">Loading ...</div><div id="canvasZone"><div id="text-area">Use the button below to enter immersive AR</div><canvas id="renderCanvas" class="disable-selection"></canvas></div><div id="Druuwid_Logo"></div><script src="js/app.js"></script></body></html>
+                display: none !important;
+            }</style></head><body><div id="overlay"></div><div id="center-column"><div id="text-area"><div id="text-area-text"><span id="headsets-text"><u>Headsets</u><br/>Passthrough: ON, Hand tracking: ON<br/></span><br/><u>Phones</u><br/>Ringer: ON, Volume: 100%</div></div><div id="start-button">Enter</div></div><div id="canvasZone"><canvas id="renderCanvas" class="disable-selection"></canvas></div><a id="RH_Logo" href="https://www.mitrealityhack.com/" title="MIT Reality Hack website link" target="_blank" rel="noopener noreferrer"><div class="content"></div></a><a id="Druuwid_Logo" href="https://www.instagram.com/druuw.id/" title="druuw.id Instagram link" target="_blank" rel="noopener noreferrer"><div class="content"></div></a><script src="js/loadingScreen.js"></script><script src="js/app.js"></script><script>// Prevent magnifying glass on long press and double press.
+            document.addEventListener("touchstart", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            });</script></body></html>
